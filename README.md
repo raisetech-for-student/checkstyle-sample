@@ -15,6 +15,8 @@ https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_c
 
 実行すると`/build/reports/checkstyle`にレポートが出力されます。  
 
+<img width="500" alt="checkstyle-1" src="https://user-images.githubusercontent.com/62045457/166938329-dd4e07a4-9fae-4ba3-afb3-27ad4a3066a1.png">
+
 # 導入方法
 
 Checkstyle導入方法についてはmainブランチのコミットログを参考にしてください  
