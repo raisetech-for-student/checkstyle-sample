@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CheckstyleSampleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CheckstyleSampleApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(CheckstyleSampleApplication.class, args);
+  }
 
 }
