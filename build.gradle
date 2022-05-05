@@ -24,4 +24,6 @@ tasks.named('test') {
 
 checkstyle {
     toolVersion = '10.2'
+    ignoreFailures = false
+    maxWarnings = 0
 }
