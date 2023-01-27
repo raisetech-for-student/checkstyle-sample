@@ -58,7 +58,9 @@ BUILD SUCCESSFULとコンソールに表示されるまで待ちましょう。
 `./build/reports/checkstyle/main.html`を開きましょう。  
 お好きなブラウザでOKです。  
 
-レポートを見るとエラーが無いことがわかります。
+レポートを見るとエラーが無いことがわかります。  
+
+<img width="500" alt="checkstylereport" src="https://user-images.githubusercontent.com/62045457/215107282-8b7334c7-74c3-4d10-8658-ac671fe6c921.png">
 
 ## あえてエラーになるようなJavaファイルを作成する
 
@@ -101,6 +103,8 @@ public class sampleClass {
 BUILD SUCCESSFULとコンソールに表示されるまで待ちましょう。  
 
 レポートを確認するとエラー内容が表示されているはずです。  
+
+<img width="500" alt="checkstylereport-with-error" src="https://user-images.githubusercontent.com/62045457/215107342-b7bfffdc-0349-4eed-ae4e-114c3170df76.png">
 
 ## エラー内容を読み解く
 
@@ -146,7 +150,7 @@ https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f
 
 ワークフローはGitHub Actionsにより作成しています。
 
-みなさんの手元のソースにも同じものがあります。  
+みなさんの手元のソースコードにも同じものがあります。  
 
 ワークフロー内でCheckstyleを実行しているのはこちらです。  
 
@@ -165,11 +169,23 @@ test/checkstyleブランチからご自身のmainブランチに対してPull Re
 
 作成したら、下記キャプチャのようにCIが自動で起動してCheckstyleが実行されます。  
 
+<img width="500" alt="ci-inprogress" src="https://user-images.githubusercontent.com/62045457/215106874-ebc5702f-5dd6-4404-a150-0f8f833139fc.png">
+
 しばらく待つとAll checks have failedとなります。  
+
+<img width="500" alt="ci-failed" src="https://user-images.githubusercontent.com/62045457/215106905-59f9e833-bf08-4fdb-a181-ef1a2f4f1b9c.png">
 
 Detailsをクリックすると遷移先でCheckstyleのエラー内容を見ることができます。  
 
-また、Files changedを押すと、レポートでみたようなファイル内のどこに問題があるのか、何が問題なのかがひと目で分かります。
+<img width="500" alt="ci-details" src="https://user-images.githubusercontent.com/62045457/215106954-4500837e-7a3b-48c7-9c42-d8f2fa0b6257.png">
+
+<img width="500" alt="ci-logs" src="https://user-images.githubusercontent.com/62045457/215107028-dbe6c2e8-b635-45e6-b309-c0767802b4bd.png">
+
+また、Files changedを押すと、レポートでみたようなファイル内のどこに問題があるのか、何が問題なのかがひと目で分かります。  
+
+<img width="500" alt="ci-fileschanged" src="https://user-images.githubusercontent.com/62045457/215107105-59b6fa15-6690-4d4a-bf5e-84fef2ad2e91.png">
+
+<img width="500" alt="ci-fileschanged-detail" src="https://user-images.githubusercontent.com/62045457/215107163-051805c0-fdb9-48cf-a0d8-a10b3a54812a.png">
 
 便利ですね。
 
