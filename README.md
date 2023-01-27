@@ -1,28 +1,220 @@
-# このプロジェクトについて
+# 概要
 
-CheckstyleをCIに導入するサンプルのプロジェクトです。
+CheckstyleをCIに導入する流れを学ぶためのハンズオンです。
 
 # 前提
 - Java 17
 
-# 利用しているCheckstyle
+# そもそもCheckstyleとは
 
-GoogleのCheckstyleを利用しています。  
-https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
+Checkstyleはインデントが揃っていない、変数名なのにキャメルケースじゃないといったソースコード内の問題を検出してくれます。  
 
-# 実行方法
-`./gradlew checkstyleMain`
+こういったツールのことをlint、linter、静的解析ツールといわれます。  
+つまり、CheckstyleはJavaのソースコードのための静的解析ツールと言えます。  
 
-実行すると`/build/reports/checkstyle`にレポートが出力されます。  
+ちなみにCheckstyle以外にもSpotbugsやPMDというツールもあります。  
 
-<img width="500" alt="checkstyle-1" src="https://user-images.githubusercontent.com/62045457/166938329-dd4e07a4-9fae-4ba3-afb3-27ad4a3066a1.png">
+lintについてはこちらの資料もぜひ参考にしてください。  
 
-# 導入方法
+https://kiwi-wasp-3c9.notion.site/lint-ffd53c185fe14622ac312ce5e16ad90e  
 
-Checkstyle導入方法についてはmainブランチのコミットログを参考にしてください  
-https://github.com/raisetech-for-student/checkstyle-sample/commits/main
+静的解析ツールを活用することでソースコードのバグの検出漏れをふせぐことができます。  
+また、静的解析ツールは初学者がミスをしがちな点を指摘してくれるので新人エンジニアにとってはよい先生になってくれます。
 
-CIの設定ファイルは[checkstyle.yml](./github/workflows/checkstyle.yml)を参照してください。  
-CI失敗時にマージを禁止するサンプルは[こちらのPR](https://github.com/raisetech-for-student/checkstyle-sample/pull/1)を参考にしてください。  
-GitHubのレポジトリのSettings > BranchesからBranch protection ruleを追加します。  
-`Require status checks to pass before merging`にCheckstyleのワークフローを追加しましょう。
+# ハンズオン
+
+## お願い
+- もし手順にあやまりがあればぜひ教えて下さい!
+- 各コマンド実施時に表示されるメッセージはよく読みましょう!
+    - 問題が起きていることに気づかずどんどんコマンド実行して気づいたらめちゃくちゃに・・・というのはあるあるです。
+- エラーで困った際にはSlackなどでスクショや画面録画などをつかいつつ説明いただけると解決までの時間が早くなります!
+
+## このハンズオンで学ぶこと
+
+このハンズオンでは以下のことを学べます。
+- ローカルでCheckstyleを実行する方法
+- Checkstyleのレポートの読み方
+- CIにCheckstyleを導入し、Pull Requestでチェックをする方法
+
+## 準備
+
+まずはこのハンズオンのリポジトリをforkしてください。  
+forkできましたら、ご自身のローカルPCにcloneしてエディタでプロジェクトを開いてください。  
+
+参考: https://docs.github.com/ja/get-started/quickstart/fork-a-repo
+
+## ローカルでCheckstyleを実行
+
+ルートディレクトリ上で下記コマンドを実行してみてください。  
+
+```shell
+% ./gradlew checkstyleMain
+```
+
+BUILD SUCCESSFULとコンソールに表示されるまで待ちましょう。
+
+## レポートの確認
+
+`./build/reports/checkstyle/main.html`を開きましょう。  
+お好きなブラウザでOKです。  
+
+レポートを見るとエラーが無いことがわかります。
+
+## あえてエラーになるようなJavaファイルを作成する
+
+以下のようなパッケージとJavaファイルを作成してください。
+
+src/main/java/com/raisetech/checkstylesample下にSAMPLEというパッケージ名を作ってください。    
+
+SAMPLE配下にクラス名をsampleClassとしたJavaファイルを作成しましょう。  
+
+```java
+package com.raisetech.checkstylesample.SAMPLE;
+
+public class sampleClass {
+  private String FirstName;
+
+  private String family_name;
+
+  private int age;
+
+  public String getFirstName() {
+    return FirstName;
+  }
+
+  public String getFamily_name() {
+    return family_name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+}
+```
+
+ルートディレクトリ上で下記コマンドを実行してみてください。
+
+```shell
+% ./gradlew checkstyleMain
+```
+
+BUILD SUCCESSFULとコンソールに表示されるまで待ちましょう。  
+
+レポートを確認するとエラー内容が表示されているはずです。  
+
+## エラー内容を読み解く
+
+```shell
+Package name 'com.raisetech.checkstylesample.SAMPLE' must match pattern '^[a-z]+(\.[a-z][a-z0-9]*)*$'.
+```
+
+問題のある箇所はソースコードで言うところのこちらになります。  
+
+```java
+package com.raisetech.checkstylesample.SAMPLE;
+```
+
+`'^[a-z]+(\.[a-z][a-z0-9]*)*$'`についてですが、これは文字化けではなく正規表現と呼ばれるものです。  
+
+正規表現が初耳の人はぜひ調べてみてください。  
+
+`'^[a-z]+(\.[a-z][a-z0-9]*)*$'`は小文字の英字から始まり、末尾に「.」と小文字の英字、数字の組み合わせが0回以上続く文字列を表しています。  
+
+Checkstyleのメッセージ内容としては、
+
+「パッケージ名はsampleのような小文字のアルファベットで始まり、その後に小文字のアルファベットや数字、またはドットで続く文字列パターンにマッチするようにしてください」  
+
+という意味合いになります。  
+
+他のエラーメッセージを訳してみると、次のようになります。  
+正規表現は意訳しています。  
+
+- 型名のsampleClassは大文字アルファベット始まりになるようにしましょう
+- メンバーのFirstNameは小文字始まりのアルファベット始まりになるようにしましょう
+- メンバーのfamily_nameはアンダースコアが含まれないようにしましょう
+- 8行目のメンバーのageはインデントはスペース4つでなく2つにしましょう
+
+英語&正規表現なので最初はハードルが高いですが、このメッセージを読み解くのはとても大事です。  
+繰り返し間違うことで、どの行に問題があるかみるだけでも何が問題かわかるようになってきます。  
+
+## Pull Request上でCheckstyleを実行する
+
+次に、Pull Request上で同様のチェックを行う方法について解説します。  
+
+下記ファイルにPull Requestの作成時、変更をpush時に自動でCheckstyleを実行するワークフローを作成しています。  
+https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f0c214bf812af76afedd87dc41a/.github/workflows/checkstyle.yml  
+
+ワークフローはGitHub Actionsにより作成しています。
+
+みなさんの手元のソースにも同じものがあります。  
+
+ワークフロー内でCheckstyleを実行しているのはこちらです。  
+
+https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f0c214bf812af76afedd87dc41a/.github/workflows/checkstyle.yml#L21-L30
+
+では、さきほどのsampleClass.javaをpushしてみましょう。  
+
+```shell
+% git checkout -b test/checkstyle
+% git add .
+% git commit -m "CIでのCheckstyleの動作確認のための変更"
+% git push origin head -u
+```
+
+test/checkstyleブランチからご自身のmainブランチに対してPull Requestを作成しましょう。  
+
+作成したら、下記キャプチャのようにCIが自動で起動してCheckstyleが実行されます。  
+
+しばらく待つとAll checks have failedとなります。  
+
+Detailsをクリックすると遷移先でCheckstyleのエラー内容を見ることができます。  
+
+また、Files changedを押すと、レポートでみたようなファイル内のどこに問題があるのか、何が問題なのかがひと目で分かります。
+
+便利ですね。
+
+## 自分のリポジトリにCheckstyleを導入する方法
+
+最後に自身のリポジトリにCheckstyleを導入する方法を2つ紹介します。
+
+### ローカルで実行できるようにする方法
+
+公式ドキュメントにあるように、build.gradleのpluginsにcheckstyleを追加します。  
+https://docs.gradle.org/current/userguide/checkstyle_plugin.html  
+```groovy
+plugins {
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'checkstyle'
+}
+```
+
+また、Checkstyleの設定ファイルも必要です。  
+
+`./config/checkstyle`ディレクトリを作成してその下にcheckstyle.xmlを配置しましょう。  
+
+ファイルの中身についてはハンズオンではgoogleのものを採用しました。  
+https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml  
+
+この中身をかえることで独自の設定を適用できます。  
+
+この状態で
+
+```shell
+% ./gradlew checkstyleMain
+```
+
+を実行するとCheckstyleが実行できます。
+
+
+## CIで実行する方法
+
+シンプルです。  
+
+このファイルをコピーしていただければいいです。
+https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f0c214bf812af76afedd87dc41a/.github/workflows/checkstyle.yml
+
+配置する際には`./github/workflows`を作成して、その配下に置くようにしましょう。  
+
+ワークフローファイルの中身は1行ずつ読んで理解するようにしましょう。  
