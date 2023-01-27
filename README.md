@@ -23,12 +23,6 @@ https://kiwi-wasp-3c9.notion.site/lint-ffd53c185fe14622ac312ce5e16ad90e
 
 # ハンズオン
 
-## お願い
-- もし手順にあやまりがあればぜひ教えて下さい!
-- 各コマンド実施時に表示されるメッセージはよく読みましょう!
-    - 問題が起きていることに気づかずどんどんコマンド実行して気づいたらめちゃくちゃに・・・というのはあるあるです。
-- エラーで困った際にはSlackなどでスクショや画面録画などをつかいつつ説明いただけると解決までの時間が早くなります!
-
 ## このハンズオンで学ぶこと
 
 このハンズオンでは以下のことを学べます。
@@ -236,7 +230,7 @@ https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_c
 
 シンプルです。  
 
-このファイルをコピーしていただければいいです。
+このファイルをコピーしていただければいいです。  
 https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f0c214bf812af76afedd87dc41a/.github/workflows/checkstyle.yml
 
 配置する際には`./github/workflows`を作成して、その配下に置くようにしましょう。  
