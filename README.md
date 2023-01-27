@@ -205,6 +205,14 @@ plugins {
     id 'checkstyle'
 }
 ```
+バージョンは資料作成時点のものです。  
+それから、build.gradle末尾に下記の記載も追加しておきましょう。
+
+```groovy
+checkstyle {
+    toolVersion = '10.2'
+}
+```
 
 また、Checkstyleの設定ファイルも必要です。  
 
