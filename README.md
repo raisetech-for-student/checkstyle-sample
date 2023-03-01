@@ -33,7 +33,9 @@ https://kiwi-wasp-3c9.notion.site/lint-ffd53c185fe14622ac312ce5e16ad90e
 ## 準備
 
 まずはこのハンズオンのリポジトリをforkしてください。  
-forkできましたら、ご自身のローカルPCにcloneしてエディタでプロジェクトを開いてください。  
+forkしたリポジトリのActionsをクリックすると`I understand~`と書いてある緑のボタンがあります。  
+そちらをクリックしてください。これでワークフローを有効にできます。
+その後、ご自身のローカルPCにcloneしてエディタでプロジェクトを開いてください。  
 
 参考: https://docs.github.com/ja/get-started/quickstart/fork-a-repo
 
