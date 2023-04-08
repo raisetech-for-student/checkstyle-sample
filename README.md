@@ -232,9 +232,19 @@ https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_c
 
 シンプルです。  
 
-このファイルをコピーしていただければいいです。  
+ご自身のリポジトリにて
+
+こちらと  
+https://github.com/raisetech-for-student/checkstyle-hands-on/blob/main/config/checkstyle/checkstyle.xml  
+こちらのファイルをコピーしていただければいいです。  
 https://github.com/raisetech-for-student/checkstyle-hands-on/blob/8506e8aba5331f0c214bf812af76afedd87dc41a/.github/workflows/checkstyle.yml
 
-配置する際には`./github/workflows`を作成して、その配下に置くようにしましょう。  
+ファイルを配置する際にパスを間違えないようにしましょう。
 
-ワークフローファイルの中身は1行ずつ読んで理解するようにしましょう。  
+./config/checkstyle/checkstyle.xml  
+.github/workflows/checkstyle.yml  
+
+checkstyle.xmlにはチェックするスタイルのルールが記載されています。  
+長大なので全部読む必要はないですが、現場ではPJのルールに合わせてxmlファイルの中身を修正しています。  
+
+checkstyle.ymlについてはCIを理解するのに重要なので一読して行ごとに意味を把握することをおすすめします。  
