@@ -1,6 +1,6 @@
 package com.raisetech.checkstylesample.SAMPLE;
 
-public class sampleClass2 {
+public class sampleClass {
 
     private String FirstName;
 
