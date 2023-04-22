@@ -18,6 +18,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: Grant execute permission to gradlew
+      run: chmod +x gradlew
+
     - name: Run check style
       uses: nikitasavinov/checkstyle-action@master
       if: always()
