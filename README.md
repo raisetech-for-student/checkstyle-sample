@@ -273,7 +273,7 @@ DiscordとGitHubを連携させる必要があります。
 
 ### キーワードの役割
 - `name`: ステップの名前
-- `uses`: ステップ内で使用する[アクション](https://docs.github.com/ja/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps)を指定
+- `uses`: ステップ内で使用する[アクション](https://docs.github.com/ja/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)を指定
 - `if`: ステップの実行条件を指定
 - `with`: アクションによって定義される入力パラメーターの map(キーと値のペア)
 - `webhook: ${{ secrets.DISCORD_WEBHOOK }}`: DiscordのURL(ここで連携)
@@ -285,7 +285,7 @@ DiscordとGitHubを連携させる必要があります。
 - `url`: タイトルクリック時に飛ぶURL
 - `userneme`: webhookの名前を上書き
 ### 結果
-![Discord通知.png](..%2F..%2FOneDrive%2F%E7%94%BB%E5%83%8F%2F%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%2FDiscord%E9%80%9A%E7%9F%A5.png)
+![Discord通知.png](..%2F..%2FOneDrive%2F%E7%94%BB%E5%83%8F%2F%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%2FDiscord%E9%80%9A%E7%9F%A5.png)![Discord通知.png](..%2F..%2FOneDrive%2F%E7%94%BB%E5%
 
 ### GitHubとDiscordの連携手順
 1. Discordを開く -> 新規サーバーを作成(追加)
