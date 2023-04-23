@@ -248,3 +248,63 @@ checkstyle.xmlにはチェックするスタイルのルールが記載されて
 長大なので全部読む必要はないですが、現場ではPJのルールに合わせてxmlファイルの中身を修正しています。  
 
 checkstyle.ymlについてはCIを理解するのに重要なので一読して行ごとに意味を把握することをおすすめします。  
+
+## CIの結果をDiscordに通知する方法
+
+要参照[英語]: https://github.com/sarisia/actions-status-discord
+
+#### 以下をRun check styleの下に追加します。  
+しかし、追加しただけではエラーになります。  
+DiscordとGitHubを連携させる必要があります。
+```shell
+    - name: Discord Notification
+      uses: sarisia/actions-status-discord@v1
+      if: always()
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        status: ${{ job.status }}
+        content: "Hey <@everyone>"
+        title: "deploy"
+        description: "Build and deploy to GitHub Pages"
+        color: "#cb88d2"
+        url: "https://github.com/sarisia/actions-status-discord"
+        username: GitHub Actions
+```
+
+### キーワードの役割
+- `name`: ステップの名前
+- `uses`: ステップ内で使用する[アクション](https://docs.github.com/ja/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps)を指定
+- `if`: ステップの実行条件を指定
+- `with`: アクションによって定義される入力パラメーターの map(キーと値のペア)
+- `webhook: ${{ secrets.DISCORD_WEBHOOK }}`: DiscordのURL(ここで連携)
+- `status`: 前のステップで定義されたjobの結果を表示
+- `content`: 埋め込まれずに表示されるテキスト
+- `title`: タイトル
+- `description`: 説明
+- `color`: 背景色
+- `url`: タイトルクリック時に飛ぶURL
+- `userneme`: webhookの名前を上書き
+### 結果
+![Discord通知.png](..%2F..%2FOneDrive%2F%E7%94%BB%E5%83%8F%2F%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%2FDiscord%E9%80%9A%E7%9F%A5.png)
+
+### GitHubとDiscordの連携手順
+1. Discordを開く -> 新規サーバーを作成(追加)
+2. チャンネルの編集 -> 連携サービス
+3. ウェブフックを作成
+4. ウェブフックの確認 -> ウェブフックURLをコピー
+5. GitHubで連携させたいリポジトリを開く
+6. Settings -> Secrets and variables -> Actions
+7. New repository secret
+8. Nameを「`DISCORD_WEBHOOK`」に設定
+9. Secretにコピーした「`ウェブフックURL`」を設定
+10. add secret -> 連携完了
+
+### まとめ
+以上でCI実行時にDiscordに通知が来るようになります。  
+キーの値はほとんど公式のものを引用しているので適宜修正してください。   
+オプションやキーワードの詳細は公式ドキュメントを確認してください。
+
+### 公式ドキュメント
+ - [GitHub Actions のワークフロー構文](https://docs.github.com/ja/actions/using-workflows/workflow-syntax-for-github-actions)
+ - [GitHub Actions を理解する](https://docs.github.com/ja/actions/learn-github-actions/understanding-github-actions)
+ - [Post GitHub Actions status to Discord as an beautiful embed](https://github.com/sarisia/actions-status-discord)
