@@ -286,6 +286,7 @@ DiscordとGitHubを連携させる必要があります。
 - `userneme`: webhookの名前を上書き
 ### 結果
 <img width="1200" alt="Discord通知" src="https://user-images.githubusercontent.com/120367482/233845960-b8852dec-10cf-43c2-a738-d6c41ac545c5.png">
+
 ### GitHubとDiscordの連携手順
 1. Discordを開く -> 新規サーバーを作成(追加)
 2. チャンネルの編集 -> 連携サービス
@@ -300,6 +301,7 @@ DiscordとGitHubを連携させる必要があります。
 
 ### まとめ
 以上でCI実行時にDiscordに通知が来るようになります。  
+ちなみに通知が届くのは前のステップの結果です。  
 キーの値はほとんど公式のものを引用しているので適宜修正してください。   
 オプションやキーワードの詳細は公式ドキュメントを確認してください。
 
